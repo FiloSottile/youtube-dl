@@ -168,20 +168,23 @@ class FileDownloader(object):
 		pp.set_downloader(self)
 
 	def to_screen(self, message, skip_eol=False):
-		"""Print message to stdout if not in quiet mode."""
+		"""Print message to stdout/stderr if not in quiet mode."""
 		assert type(message) == type(u'')
 		if not self.params.get('quiet', False):
 			terminator = [u'\n', u''][skip_eol]
 			output = message + terminator
 
-			if 'b' not in self._screen_file.mode or sys.version_info[0] < 3: # Python 2 lies about the mode of sys.stdout/sys.stderr
-				output = output.encode(preferredencoding(), 'ignore')
+			output = output.encode(preferredencoding(), 'ignore')
 			self._screen_file.write(output)
 			self._screen_file.flush()
 
 	def to_stderr(self, message):
 		"""Print message to stderr."""
-		print >>sys.stderr, message.encode(preferredencoding())
+		print >> sys.stderr, message.encode(preferredencoding())
+
+	def to_stdout(self, message):
+		"""Print message to stdout."""
+		print message.encode(preferredencoding())
 
 	def to_cons_title(self, message):
 		"""Set console/terminal window title to message."""

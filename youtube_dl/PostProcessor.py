@@ -72,7 +72,8 @@ class FFmpegExtractAudioPP(PostProcessor):
 	@staticmethod
 	def get_audio_codec(path):
 		try:
-			cmd = ['ffprobe', '-show_streams', '--', encodeFilename(path)]
+			cmd = ['ffprobe', '-show_streams', '--', path.encode(locale.getpreferredencoding())]
+			print cmd
 			handle = subprocess.Popen(cmd, stderr=file(os.path.devnull, 'w'), stdout=subprocess.PIPE)
 			output = handle.communicate()[0]
 			if handle.wait() != 0:
@@ -93,7 +94,8 @@ class FFmpegExtractAudioPP(PostProcessor):
 			acodec_opts = []
 		else:
 			acodec_opts = ['-acodec', codec]
-		cmd = ['ffmpeg', '-y', '-i', encodeFilename(path), '-vn'] + acodec_opts + more_opts + ['--', encodeFilename(out_path)]
+		cmd = (['ffmpeg', '-y', '-i', path.encode(locale.getpreferredencoding()), '-vn'] 
+		       + acodec_opts + more_opts + ['--', out_path.encode(sys.getfilesystemencoding(), 'ignore')])
 		try:
 			p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 			stdout,stderr = p.communicate()

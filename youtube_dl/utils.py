@@ -31,20 +31,10 @@ std_headers = {
 }
 
 def preferredencoding():
-	"""Get preferred encoding.
-
-	Returns the best encoding scheme for the system, based on
-	locale.getpreferredencoding() and some further tweaks.
-	"""
-	def yield_preferredencoding():
-		try:
-			pref = locale.getpreferredencoding()
-			u'TEST'.encode(pref)
-		except:
-			pref = 'UTF-8'
-		while True:
-			yield pref
-	return yield_preferredencoding().next()
+	return sys.stdout.encoding or locale.getpreferredencoding()
+	
+def locale_encoding():
+	return locale.getpreferredencoding()
 
 
 def htmlentity_transform(matchobj):
@@ -235,7 +225,7 @@ def encodeFilename(s):
 		# match Windows 9x series as well. Besides, NT 4 is obsolete.)
 		return s
 	else:
-		return s.encode(sys.getfilesystemencoding(), 'ignore')
+		return s.encode(sys.getfilesystemencoding(), 'replace')
 
 class DownloadError(Exception):
 	"""Download Error exception.
