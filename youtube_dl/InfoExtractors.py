@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import datetime
-import HTMLParser
 import httplib
 import netrc
 import os
@@ -17,12 +16,8 @@ import random
 import math
 from urlparse import parse_qs
 
-try:
-	import cStringIO as StringIO
-except ImportError:
-	import StringIO
-
 from utils import *
+from abc import ABCMeta
 
 
 class InfoExtractor(object):
@@ -67,18 +62,26 @@ class InfoExtractor(object):
 	Finally, the _WORKING attribute should be set to False for broken IEs
 	in order to warn the users and skip the tests.
 	"""
+	__metaclass__ = ABCMeta
 
 	_ready = False
 	_downloader = None
 	_WORKING = True
 
 	def __init__(self, downloader=None):
-		"""Constructor. Receives an optional downloader."""
+		"""Constructor.
+
+		:param downloader: Default None, receive an optional downloader of
+						   type Downloader.
+		"""
 		self._ready = False
 		self.set_downloader(downloader)
 
 	def suitable(self, url):
-		"""Receives a URL and returns True if suitable for this IE."""
+		"""Receives a URL and returns True if suitable for this IE.
+
+		:param url: A string url.
+		"""
 		return re.match(self._VALID_URL, url) is not None
 
 	def working(self):
@@ -92,21 +95,30 @@ class InfoExtractor(object):
 			self._ready = True
 
 	def extract(self, url):
-		"""Extracts URL information and returns it in list of dicts."""
+		"""Extracts URL information and returns it in list of dicts.
+
+		:param url: A string url.
+		"""
 		self.initialize()
 		return self._real_extract(url)
 
 	def set_downloader(self, downloader):
-		"""Sets the downloader for this IE."""
+		"""Sets the downloader for this IE.
+
+		:param downloader: The new downloader of type
+		"""
 		self._downloader = downloader
 
+	@abstractmethod
 	def _real_initialize(self):
-		"""Real initialization process. Redefine in subclasses."""
-		pass
+		"""Real initialization process. Must be redefined in subclasses."""
 
+	@abstractmethod
 	def _real_extract(self, url):
-		"""Real extraction process. Redefine in subclasses."""
-		pass
+		"""Real extraction process. Must be redifined redefined in subclasses.
+
+		:param url: A string url.
+		"""
 
 
 class YoutubeIE(InfoExtractor):
