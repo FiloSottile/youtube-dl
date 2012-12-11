@@ -1,0 +1,26 @@
+* The retries thing
+* Travis notifications etc.
+* Kill literal and this escaping stuff
+* setup.py and pip etc.
+* Build server e download
+* 2.5 warning
+
+* Modularize tests!!
+
+* listformats
+* IE capabilities?
+* see Wiki pages
+* _WORKING = automatic supported sites list
+
+* look into --no-mtime
+
+https://github.com/rg3/youtube-dl/pull/408
+
+* linting, PEP, and pyflake http://stackoverflow.com/questions/1428872/pylint-pychecker-or-pyflakes
+
+gh_pages: document tarball, cover/
+notify packagers and close bugs
+
+list of VIP users and packagers
+
+ALL THE THINGS LEFT IN THE PULL REQ
