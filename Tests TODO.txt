@@ -1,0 +1,16 @@
+YoutubeSearchIE(),
+GoogleSearchIE(),
+        BlipTVUserIE(),
+
+        PhotobucketIE(), # Cambiato tutto, tasto download
+        DepositFilesIE(), # Ma mostrano ancora video? probably _BROKEN
+
+        ComedyCentralIE(), # RTMPDUMP
+        InfoQIE(), # RTMPDUMP
+        MTVIE(), # RTMPDUMP http://www.mtv.com/videos/yellowcard/863419/awakening.jhtml#id=1518072
+
+        ArteTvIE(), # rtmpdump http://videos.arte.tv/fr/videos/360-geo--7115440.html
+
+        GenericIE()
+
+YT rtmpdump
