@@ -13,8 +13,12 @@ if 'signature' in versions_info:
 print('Enter the PKCS1 private key, followed by a blank line:')
 privkey = ''
 while True:
-	line = input()
-	if line == '': break
+	try:
+		line = input()
+	except EOFError:
+		break
+	if line == '':
+		break
 	privkey += line + '\n'
 privkey = bytes(privkey, 'ascii')
 privkey = rsa.PrivateKey.load_pkcs1(privkey)
